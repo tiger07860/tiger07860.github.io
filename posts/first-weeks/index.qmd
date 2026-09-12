@@ -4,7 +4,7 @@ author: "Tahir Hussain"
 date: 2026-09-10
 ---
 
-![Orientation day on campus.](orientation.jpg)
+![Orientation day on campus.](orientation.jpg){height="500px" fig-align="left"}
 
 Starting the Master of Data Science program at UBC has been a major change for me. A few weeks ago, I was still in India preparing for my move to Vancouver, and now I am attending classes at one of Canada's largest universities. Arriving in Vancouver and seeing the UBC campus in person made the transition feel much more real. Orientation was a great opportunity to meet my classmates, learn more about the program, and get a better idea of what the next several months will look like.
 
