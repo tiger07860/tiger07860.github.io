@@ -1,0 +1,38 @@
+---
+title: "About"
+---
+
+#
+
+## Background
+
+I am from Dewas, a city in Madhya Pradesh, India. I completed my undergraduate degree in Electronics and Communication Engineering with a minor in Computer Science at Dr. B. R. Ambedkar National Institute of Technology, Jalandhar.
+
+During university, I became increasingly interested in software development and problem solving. Although my undergraduate degree was in electronics and communication engineering, my minor in computer science and my projects gave me an opportunity to explore programming and software development more deeply.
+
+After graduating, I joined Paytm as a Software Engineer after completing an internship there. I worked primarily on backend systems, APIs, and data-intensive applications using technologies such as Java, Spring Boot, MySQL, Redis, and Kafka. Working on systems that processed large amounts of data made me increasingly interested in what could be done with that data beyond simply storing and processing it.
+
+That experience eventually led me to pursue graduate studies in data science at UBC.
+
+## Why data science
+
+My interest in data science grew from the intersection of software engineering and data. As a software engineer, I spent much of my time building systems that processed and moved data. Over time, I became more interested in the next question: what can we actually learn from that data, and how can it be used to make better decisions?
+
+I chose the UBC Master of Data Science program because I wanted to develop a stronger foundation in areas that were not a major part of my previous work, particularly statistics, probability, data analysis, and machine learning. At the same time, the program allows me to build on the programming and software engineering skills I already have.
+
+I am especially interested in the practical side of data science. Rather than focusing only on theory, I want to learn how to take a real-world problem, work with messy data, build an appropriate model or analysis, and communicate the results clearly.
+
+In the long term, I hope to explore different areas of data science, machine learning, and artificial intelligence and find ways to combine these skills with my software engineering background.
+
+## Outside of data science
+
+Outside of my studies, I enjoy staying active and spending time outdoors. I regularly go to the gym and enjoy swimming, and I particularly like hiking. I enjoy being out on a trail, exploring a new route, and spending time away from screens and coursework.
+
+I also enjoy discovering new places. Whether it is exploring a new part of the city, visiting somewhere I have never been before, or simply taking a different route and seeing what I find, I like the experience of discovering something new.
+
+I am a big cricket fan and enjoy following and watching cricket whenever I get the chance. It has been one of my favourite ways to unwind and stay connected with something I have enjoyed for years.
+
+In my quieter time, I enjoy listening to music and watching movies. These are usually how I relax after a busy day and take a break from academics.
+
+I also really enjoy meeting new people. Moving to a new country has given me the opportunity to meet people from different backgrounds, hear their stories, and make new connections. For me, these experiences are an important part of life outside the classroom.
+

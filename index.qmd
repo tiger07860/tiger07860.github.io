@@ -1,0 +1,18 @@
+---
+title: "Tahir Hussain"
+about:
+  template: jolla
+  image: images/profile.jpg
+  links:
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/tahir-hussain-1057381a3/
+    - icon: github
+      text: Github
+      href: https://github.com/tiger07860
+    - icon: envelope
+      text: Email
+      href: mailto:tahir.masters2k@gmail.com
+---
+
+###### I’m Tahir Hussain, a Master of Data Science student at the University of British Columbia in Vancouver. I grew up in Dewas, Madhya Pradesh, India, and completed my B.Tech. in Electronics and Communication Engineering with a minor in Computer Science at NIT Jalandhar. Before joining UBC, I worked as a Software Engineer at Paytm, where I primarily worked on backend systems and data-intensive applications. I am now looking to build on my software engineering experience with stronger skills in statistics, data science, and machine learning, and use them to solve real-world problems.
