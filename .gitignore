@@ -5,3 +5,5 @@ _site/
 **/*.quarto_ipynb
 
 /.quarto/
+.Rhistory
+.RData
