@@ -1,6 +1,12 @@
 # tiger07860.github.io
 
-Personal website and blog for Tahir Hussain (UBC Master of Data Science), built with [Quarto](https://quarto.org). It has two computational posts on the Palmer Penguins data: one in R (`posts/penguins-r`) and one in Python (`posts/penguins-python`). The Python environment is pinned with [uv](https://docs.astral.sh/uv/) and the R environment with [renv](https://rstudio.github.io/renv/).
+Personal website and blog for Tahir Hussain (UBC Master of Data Science), built with [Quarto](https://quarto.org). It has three computational posts using the Palmer Penguins data:
+
+- `posts/penguins-r`: an analysis in R
+- `posts/penguins-python`: an analysis in Python
+- `posts/r-and-python`: a bonus post that uses R and Python in one document
+
+The Python environment is pinned with [uv](https://docs.astral.sh/uv/) and the R environment with [renv](https://rstudio.github.io/renv/).
 
 Live site: https://tiger07860.github.io
 
@@ -60,9 +66,19 @@ uv run quarto preview
 
 ## 4. Data
 
-Both posts use the Palmer Penguins data (Horst, Hill and Gorman, 2020; CC0 licence), from https://allisonhorst.github.io/palmerpenguins/.
+All posts use the Palmer Penguins data (Horst, Hill and Gorman, 2020; CC0 licence), from https://allisonhorst.github.io/palmerpenguins/.
 
 - R post: the `palmerpenguins` R package.
 - Python post: the `palmerpenguins` Python package.
+- Bonus post: the `palmerpenguins` R package.
 
 The data ships inside these packages, so rendering does **not** need the network to fetch data. The network is only needed to install packages in `uv sync` and `renv::restore()`.
+
+## 5. Bonus post: R and Python together
+
+The post `posts/r-and-python/index.qmd` runs R and Python in the same document using the [reticulate](https://rstudio.github.io/reticulate/) package. R computes a summary, Python reads it with `r.mass_by_species`, and R reads the Python result back with `py$df`.
+
+- `reticulate` is recorded in `renv.lock`.
+- The post points reticulate at this project's Python with `use_python()`, using the interpreter inside `.venv`. Run `uv sync` first to create `.venv`.
+- No extra commands are needed beyond section 2. `uv run quarto render` builds it along with the other posts.
+- Once the site is built, its page is `docs/posts/r-and-python/index.html`, and on the live site it is at https://tiger07860.github.io/posts/r-and-python/.
