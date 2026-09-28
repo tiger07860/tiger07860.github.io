@@ -1,0 +1,92 @@
+---
+title: "Using R and Python in One Document"
+author: "Tahir Hussain"
+date: 2026-09-28
+---
+
+Data: [Palmer Penguins](https://allisonhorst.github.io/palmerpenguins/), Palmer Station Antarctica LTER, released under the [CC0](https://creativecommons.org/publicdomain/zero/1.0/) licence. Cite as Horst AM, Hill AP, Gorman KB (2020). I use the copy that ships inside the `palmerpenguins` R package, so nothing is downloaded when the site is built.
+
+In this post I use R and Python in the same document. R prepares a summary of the penguin data, Python reads that summary and works with it, and then R reads a result that Python computed. The two languages talk to each other through the `reticulate` package.
+
+## Set up R and point it at the project's Python
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+library(reticulate)
+library(palmerpenguins)
+library(dplyr)
+library(ggplot2)
+library(knitr)
+
+# Use the Python from this project's .venv (the post runs from its own folder)
+use_virtualenv("../../.venv", required = TRUE)
+```
+
+## Step 1: R computes a summary
+
+```{r}
+#| label: r-summary
+species_summary <- penguins |>
+  filter(!is.na(body_mass_g), !is.na(flipper_length_mm)) |>
+  group_by(species) |>
+  summarise(
+    n = n(),
+    mean_body_mass_g = mean(body_mass_g),
+    mean_flipper_length_mm = mean(flipper_length_mm)
+  ) |>
+  as.data.frame()
+
+species_summary
+```
+
+## Step 2: Python reads the R object
+
+In Python, an R object is available as `r.name`. Here `r.species_summary` is the data frame from the chunk above, seen as a pandas DataFrame.
+
+```{python}
+#| label: python-work
+import matplotlib.pyplot as plt
+
+df = r.species_summary.copy() # pyrefly: ignore
+df["species"] = df["species"].astype(str)
+df["mass_per_mm_flipper"] = (
+    df["mean_body_mass_g"] / df["mean_flipper_length_mm"]
+).round(2)
+
+# Objects created here can be read back in R with py$name
+python_summary = df
+heaviest = str(df.loc[df["mean_body_mass_g"].idxmax(), "species"])
+
+df
+```
+
+```{python}
+#| label: fig-python-bar
+#| fig-cap: "Average body mass by species, drawn in Python from a summary computed in R."
+fig, ax = plt.subplots(figsize=(6, 4))
+ax.bar(df["species"], df["mean_body_mass_g"])
+ax.set_xlabel("Species")
+ax.set_ylabel("Mean body mass (g)")
+plt.show()
+```
+
+## Step 3: R reads the Python result
+
+In R, a Python object is available as `py$name`. The table below was built in Python, and the species named in the text comes from a Python variable.
+
+```{r}
+#| label: r-uses-python
+py$python_summary |>
+  kable(
+    digits = 2,
+    caption = "Summary table computed in Python and displayed by R."
+  )
+```
+
+The heaviest species on average is **`r py$heaviest`**. That value was computed in Python and read here in R.
+
+## What I found
+
+Gentoo penguins are the heaviest species on average, and the bar chart and table agree. The main point of this post is the workflow: R did the data preparation, Python did the extra calculation and plotting, and R displayed the results, all in one document.
