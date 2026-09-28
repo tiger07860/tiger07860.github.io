@@ -76,9 +76,9 @@ The data ships inside these packages, so rendering does **not** need the network
 
 ## 5. Bonus post: R and Python together
 
-The post `posts/r-and-python/index.qmd` runs R and Python in the same document using the [reticulate](https://rstudio.github.io/reticulate/) package. R computes a summary, Python reads it with `r.mass_by_species`, and R reads the Python result back with `py$df`.
+The post `posts/r-and-python/index.qmd` runs R and Python in the same document using the [reticulate](https://rstudio.github.io/reticulate/) package. R computes a summary (`species_summary`), Python reads it with `r.species_summary`, and R reads the Python results back with `py$python_summary` and `py$heaviest`.
 
 - `reticulate` is recorded in `renv.lock`.
-- The post points reticulate at this project's Python with `use_python()`, using the interpreter inside `.venv`. Run `uv sync` first to create `.venv`.
+- The post points reticulate at this project's Python with `use_virtualenv("../../.venv", required = TRUE)`. That path is relative to the post's folder, so run `uv sync` first to create `.venv`.
 - No extra commands are needed beyond section 2. `uv run quarto render` builds it along with the other posts.
 - Once the site is built, its page is `docs/posts/r-and-python/index.html`, and on the live site it is at https://tiger07860.github.io/posts/r-and-python/.
