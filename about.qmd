@@ -2,8 +2,6 @@
 title: "About"
 ---
 
-#
-
 ## Background
 
 I am from Dewas, a city in Madhya Pradesh, India. I completed my undergraduate degree in Electronics and Communication Engineering with a minor in Computer Science at Dr. B. R. Ambedkar National Institute of Technology, Jalandhar.
