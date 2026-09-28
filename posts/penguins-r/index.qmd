@@ -1,0 +1,121 @@
+---
+title: "Penguins Data Processing with R"
+author: "Tahir Hussain"
+date: 2026-09-24
+---
+
+Data: [Palmer Penguins](https://allisonhorst.github.io/palmerpenguins/), Palmer Station Antarctica LTER, released under the [CC0](https://creativecommons.org/publicdomain/zero/1.0/) licence. Cite as Horst AM, Hill AP, Gorman KB (2020). I use the copy that ships inside the `palmerpenguins` R package, so nothing is downloaded when the site is built.
+
+### Loading Packages
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+library(janitor)
+library(tidyverse)
+library(palmerpenguins)
+```
+
+### Loading the data
+
+```{r}
+#| label: load-data
+penguins_data <- penguins |>
+  drop_na(species, sex, body_mass_g, flipper_length_mm)
+
+head(penguins_data)
+```
+
+The dataset contains measurements of penguins from three species: Adelie, Chinstrap, and Gentoo. I removed rows with missing values in the variables used in this analysis.
+
+### Clean Data Column Names
+
+```{r}
+#| label: clean-names
+clean_penguins_data <- clean_names(penguins_data)
+head(clean_penguins_data)
+```
+
+### Filtering Rows on Condition
+
+```{r}
+#| label: filter-adelie
+filter_penguins_data <- clean_penguins_data |>
+  filter(species == "Adelie")
+
+head(filter_penguins_data)
+```
+
+### Selecting Columns
+
+```{r}
+#| label: select-columns
+subset_penguins_data <- filter_penguins_data |>
+  select(species, island, bill_length_mm, bill_depth_mm)
+
+head(subset_penguins_data)
+```
+
+### Comparing body mass by species
+
+First, I calculate the average body mass for each species.
+
+```{r}
+#| label: species-summary
+average_mass <- penguins_data |>
+  group_by(species) |>
+  summarise(
+    mean_body_mass_g = mean(body_mass_g),
+    median_body_mass_g = median(body_mass_g),
+    n = n()
+  )
+
+average_mass
+```
+
+The results show that body mass differs between the three species. Gentoo penguins have the highest average body mass, while Adelie penguins have the lowest average body mass.
+
+### Body mass and flipper length
+
+Next, I examine the relationship between body mass and flipper length.
+
+```{r}
+#| label: fig-penguin-mass
+#| fig-cap: "Body mass and flipper length of Palmer Penguins by species."
+ggplot(
+  penguins_data,
+  aes(x = flipper_length_mm, y = body_mass_g, colour = species)
+) +
+  geom_point(alpha = 0.7) +
+  labs(
+    x = "Flipper length (mm)",
+    y = "Body mass (g)",
+    colour = "Species"
+  ) +
+  theme_minimal()
+```
+
+The figure shows a positive relationship between flipper length and body mass: penguins with longer flippers generally tend to have greater body mass. The species also form somewhat distinct groups.
+
+### Comparing males and females
+
+Finally, I compare the average body mass of male and female penguins.
+
+```{r}
+#| label: sex-summary
+sex_mass <- penguins_data |>
+  group_by(species, sex) |>
+  summarise(
+    mean_body_mass_g = mean(body_mass_g),
+    .groups = "drop"
+  )
+
+sex_mass
+```
+
+Across the species, the average body mass differs between males and females. This provides another example of how biological characteristics can vary within and between penguin species.
+
+### Conclusion
+
+Using the Palmer Penguins dataset, I found clear differences in body mass between species. Body mass is also positively related to flipper length, and average body mass differs between males and females. These simple summaries and visualizations demonstrate how R can be used to explore relationships in a real dataset.

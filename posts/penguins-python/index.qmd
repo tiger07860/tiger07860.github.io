@@ -1,0 +1,95 @@
+---
+title: "Exploring Penguin Body Size with Python"
+author: "Tahir Hussain"
+date: "2026-09-24"
+jupyter: python3
+---
+
+Data: [Palmer Penguins](https://allisonhorst.github.io/palmerpenguins/), Palmer Station Antarctica LTER, released under the [CC0](https://creativecommons.org/publicdomain/zero/1.0/) licence. Cite as Horst AM, Hill AP, Gorman KB (2020). I use the copy that ships inside the `palmerpenguins` Python package, so nothing is downloaded when the site is built.
+
+The dataset has measurements for 344 penguins from three species: Adelie, Chinstrap and Gentoo. In this post I do the same kind of analysis as in my R post, but in Python with pandas and matplotlib. I ask how body mass differs between species, how it relates to flipper length, and how it differs between males and females.
+
+## Loading the data
+
+```{python}
+#| label: setup
+#| warning: false
+import pandas as pd
+import matplotlib.pyplot as plt 
+from palmerpenguins import load_penguins
+```
+
+```{python}
+#| label: load-data
+penguins = load_penguins()
+print("Rows in the raw data:", penguins.shape[0])
+
+penguins_data = penguins.dropna(
+    subset=["species", "sex", "body_mass_g", "flipper_length_mm"]
+)
+print("Rows after dropping missing values:", penguins_data.shape[0])
+
+penguins_data.head()
+```
+
+I removed rows with missing values in the variables used in this analysis.
+
+## Comparing body mass by species
+
+```{python}
+#| label: species-summary
+average_mass = (
+    penguins_data.groupby("species")["body_mass_g"]
+    .agg(mean_body_mass_g="mean", median_body_mass_g="median", n="count")
+    .round(1)
+)
+average_mass
+```
+
+Body mass differs between the three species. Gentoo penguins have the highest average body mass, while Adelie penguins have the lowest.
+
+## Body mass and flipper length
+
+```{python}
+#| label: fig-penguin-mass-py
+#| fig-cap: "Body mass and flipper length of Palmer Penguins by species."
+fig, ax = plt.subplots(figsize=(7, 5))
+for species, group in penguins_data.groupby("species"):
+    ax.scatter(
+        group["flipper_length_mm"],
+        group["body_mass_g"],
+        label=species,
+        alpha=0.7,
+    )
+ax.set_xlabel("Flipper length (mm)")
+ax.set_ylabel("Body mass (g)")
+ax.legend(title="Species")
+plt.show()
+```
+
+```{python}
+#| label: correlation
+corr = penguins_data["flipper_length_mm"].corr(penguins_data["body_mass_g"])
+print(f"Correlation between flipper length and body mass: {corr:.2f}")
+```
+
+The figure shows a strong positive relationship: penguins with longer flippers tend to be heavier. The correlation is about `{python} f"{corr:.2f}"`. The species also form fairly distinct groups, with Gentoo penguins in the top right.
+
+## Comparing males and females
+
+```{python}
+#| label: sex-summary
+sex_mass = (
+    penguins_data.groupby(["species", "sex"], as_index=False)["body_mass_g"]
+    .mean()
+    .rename(columns={"body_mass_g": "mean_body_mass_g"})
+    .round(1)
+)
+sex_mass
+```
+
+In every species the males are heavier than the females on average.
+
+## Conclusion
+
+Using the Palmer Penguins data in Python, I found clear differences in body mass between species, a strong positive link between flipper length and body mass, and a consistent difference between the sexes. These simple summaries show how pandas and matplotlib can be used to explore a real dataset.
